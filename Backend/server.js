@@ -60,6 +60,17 @@ app.get('/listings', (req, res) => {
     });
 });
 
+// Delete a listing by ID
+app.delete('/delete-listing/:id', (req, res) => {
+    const listingId = req.params.id;
+    const query = 'DELETE FROM houses WHERE id = ?';
+
+    db.query(query, [listingId], (err, results) => {
+        if (err) return res.status(500).json({ error: 'Failed to delete listing' });
+        res.json({ message: 'Listing deleted successfully' });
+    });
+});
+
 
 // Serve static files (for images)
 app.use('/uploads', express.static('uploads'));
